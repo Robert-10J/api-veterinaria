@@ -6,6 +6,7 @@ const app = exress()
 
 const port = process.env.PORT ?? 3000
 
+app.use(exress.json())
 app.use(cors())
 
 app.use('/api', routesPatient)

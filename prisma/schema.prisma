@@ -18,7 +18,7 @@ model Patient {
   name      String
   caretaker String
   email     String
-  date      DateTime
+  date      DateTime @default(now())
   symptoms  String
   deleted   Boolean @default(false)
 }
