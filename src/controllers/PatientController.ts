@@ -1,11 +1,14 @@
 import { PrismaClient } from '@prisma/client'
 import { Request, Response } from 'express'
+import { Patient } from '../types'
 
 const prisma = new PrismaClient()
 
 export const createPatient = async (req: Request, res: Response) => {
+  const dataPatient: Patient = req.body
+
   const newPatient = await prisma.patient.create({
-    data: req.body
+    data: dataPatient
   })
 
   return res.status(200).json({
@@ -15,22 +18,25 @@ export const createPatient = async (req: Request, res: Response) => {
   })
 }
 
-export const getAllPatients = async (req: Request, res: Response) => {
+export const getAllPatients = async (_req: Request, res: Response): Promise<Response<Patient[]>> => {
   const allPatients = await prisma.patient.findMany({
     where: { deleted: false }
   })
 
   if (allPatients.length === 0) { 
-    return res.status(404).json({ 
+    return res.status(404).json({
       code: 404,  
       message: 'No se encontraron pacientes' 
     })
   }
 
-  return res.status(200).json(allPatients)
+  return res.status(200).json({
+    code: 200,
+    data: allPatients
+  })
 }
 
-export const getPatientById = async (req: Request, res: Response) => {
+export const getPatientById = async (req: Request, res: Response): Promise<Response<Patient>> => {
   const patientId = req.params.id
 
   const patient = await prisma.patient.findFirst({

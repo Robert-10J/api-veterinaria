@@ -9,10 +9,10 @@ import {
 
 const router = Router()
 
-router.post('/createPatient', createPatient)
-router.get('/getPatients', getAllPatients)
-router.get('/getPatient/:id', getPatientById)
+router.post('/createPatient',      createPatient)
+router.get('/getPatients',         getAllPatients)
+router.get('/getPatient/:id',      getPatientById)
 router.patch('/deletePatient/:id', deletePatientById)
-router.put('/getPatient/:id', updatePatient)
+router.put('/getPatient/:id',      updatePatient)
 
 export default router
