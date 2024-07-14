@@ -1,4 +1,5 @@
 import { body, check, query } from 'express-validator'
+import { prisma } from '../instancePrisma'
 
 export const validatePatient = [
   body('name', 'EL nombre del paciente es requerido').notEmpty().escape(),
@@ -13,6 +14,12 @@ export const validatePatient = [
   })
 ]
 
-export const checkValidationPatient = {
+export const validateIdPatient = [
+  body('id').custom(async id => {
+    const patient = await prisma.patient.findFirst({ where: { id: parseInt(id) } })
 
-}
+    if (!patient) {
+      throw new Error('Paciente no encontrado')
+    }
+  })
+]

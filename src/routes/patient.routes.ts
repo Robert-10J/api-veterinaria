@@ -10,10 +10,14 @@ import { validatePatient } from '../validators/patientValidators'
 
 const router = Router()
 
-router.post('/createPatient', validatePatient,  createPatient)
-router.get('/getPatients',         getAllPatients)
-router.get('/getPatient/:id',      getPatientById)
-router.patch('/deletePatient/:id', deletePatientById)
-router.put('/getPatient/:id',      updatePatient)
+router.get('/getPatients', getAllPatients)
+router.get('/getPatient/:id', getPatientById)
+router.post('/createPatient', validatePatient, createPatient)
+/* 
+  PUT   -> impacta en todos los atributos del recurso
+  PATCH -> solo aplica sobre uno o varios atributos
+*/
+router.put('/getPatient/:id', validatePatient, updatePatient)
+router.patch('/deletePatient/:id', validatePatient, deletePatientById)
 
 export default router

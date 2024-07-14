@@ -1,9 +1,8 @@
-import { PrismaClient } from '@prisma/client'
 import { validationResult } from 'express-validator'
 import { Request, Response } from 'express'
 import { type Patient } from '../types'
+import { prisma } from '../instancePrisma'
 
-const prisma = new PrismaClient()
 
 export const createPatient = async (req: Request, res: Response) => {
   const dataPatient: Patient = req.body
