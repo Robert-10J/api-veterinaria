@@ -6,10 +6,11 @@ import {
   getPatientById, 
   updatePatient 
 } from '../controllers/PatientController'
+import { validatePatient } from '../validators/patientValidators'
 
 const router = Router()
 
-router.post('/createPatient',      createPatient)
+router.post('/createPatient', validatePatient,  createPatient)
 router.get('/getPatients',         getAllPatients)
 router.get('/getPatient/:id',      getPatientById)
 router.patch('/deletePatient/:id', deletePatientById)

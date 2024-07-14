@@ -1,21 +1,27 @@
 import { PrismaClient } from '@prisma/client'
+import { validationResult } from 'express-validator'
 import { Request, Response } from 'express'
-import { Patient } from '../types'
+import { type Patient } from '../types'
 
 const prisma = new PrismaClient()
 
 export const createPatient = async (req: Request, res: Response) => {
   const dataPatient: Patient = req.body
+  const errors = validationResult(req)
 
-  const newPatient = await prisma.patient.create({
-    data: dataPatient
-  })
-
-  return res.status(200).json({
-    code: 201,
-    message: 'Paciente creado correctamente',
-    data: newPatient
-  })
+  if (errors.isEmpty()) {
+    const newPatient = await prisma.patient.create({
+      data: dataPatient
+    })
+  
+    return res.status(200).json({
+      code: 201,
+      message: 'Paciente creado correctamente',
+      data: newPatient
+    })
+  }
+  
+  return res.status(422).json(errors)
 }
 
 export const getAllPatients = async (_req: Request, res: Response): Promise<Response<Patient[]>> => {
