@@ -6,13 +6,13 @@ import {
   getPatientById, 
   updatePatient 
 } from '../controllers/PatientController'
-import { validatePatient } from '../validators/patientValidators'
+import { schemaValidationPatient, validatePatient } from '../validators/patientValidators'
 
 const router = Router()
 
 router.get('/getPatients', getAllPatients)
 router.get('/getPatient/:id', getPatientById)
-router.post('/createPatient', validatePatient, createPatient)
+router.post('/createPatient', schemaValidationPatient, createPatient)
 /* 
   PUT   -> impacta en todos los atributos del recurso
   PATCH -> solo aplica sobre uno o varios atributos
